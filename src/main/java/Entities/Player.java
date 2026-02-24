@@ -1,7 +1,6 @@
 package Entities;
 
 import Items.Item;
-import Items.Weapon;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -68,41 +67,4 @@ public class Player extends Entity{
     public ArrayList<Item> getItems() {
         return items;
     }
-
-
-    public void useItem(Player player){
-        if(items.isEmpty()){
-            System.out.println("No items in your hand");
-            return;
-        }
-
-        for (Item item : items) {
-            System.out.println(item.toStr());
-        }
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("What item would you like to use? Type 0 to cancel.");
-        String itemName = sc.nextLine();
-
-        if(itemName.equals("0")){
-            System.out.println("No items used");
-            return;
-        }
-
-        Item foundItem = findItem(itemName);
-        foundItem.itemEffect(player);
-        items.remove(foundItem);
-
-    }
-
-    public Item findItem(String itemName){
-        for (Item item : items) {
-            if(item.getName().equalsIgnoreCase(itemName)){
-                return item;
-            }
-        }
-        return null;
-    }
-
-
 }

@@ -12,10 +12,6 @@ public class Potion extends Item {
         return buffType;
     }
 
-    public void setBuffType(String buffType) {
-        this.buffType = buffType;
-    }
-
     @Override
     public String toStr() {
         return getName() + "\n- " + getDescription() + "\n- Type: " + getType() + "\n- Buff type: " + getBuffType() + "\n- Healed points: " + getDmg() + "\n";

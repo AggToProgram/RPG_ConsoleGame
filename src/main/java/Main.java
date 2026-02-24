@@ -35,7 +35,7 @@ public class Main {
             switch (input) {
                 case 1 -> appService.playerMove(player);
                 case 2 -> appService.playerExplore(player);
-                case 3 -> player.useItem(player);
+                case 3 -> appService.useItem(player);
                 case 4 -> System.out.println(player.getStats());
                 case 5 -> running = false;
             }

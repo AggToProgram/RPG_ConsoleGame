@@ -25,16 +25,16 @@ public class AppService {
     Item healPotion = new Potion("Potion of healing", "A potion that heals", "Potion", "Healing", 50);
     Item ultraHealPotion = new Potion("Potion of the fallen angel", "Heals/adds 100hp", "Potion", "Healing", 100);
 
-    Room room0 = new Room("Entrance of the dungeon", "The beginning of your adventure", 1, 0);
-    Room room1 = new Room("The room of the living", "A greatly lit room full of statues of people, seemingly happy", 1, 1);
+    Room room0 = new Room("Entrance of the dungeon", "The beginning of your adventure", 1);
+    Room room1 = new Room("The room of the living", "A greatly lit room full of statues of people, seemingly happy", 1);
     Room room2 = new Room("The room of the martyrs", "A gently lit room, almost identical to the last one, " +
-            "but the statues appear to be in pain", 3, 3);
+            "but the statues appear to be in pain", 3);
     Room room3 = new Room("The room of the corpses", "A dark room whose only source of light being a candle. " +
-            "The statues are lifeless and destroyed", 5, 3);
+            "The statues are lifeless and destroyed", 5);
     Room room4 = new Room("The room of the spirits", "A fully dark room, the statues are gone, " +
-            "but you are not alone", 7, 4);
+            "but you are not alone", 7);
     Room room5 = new Room("The room of the Hellborn", "The statues have returned in the form of demons. " +
-            "They are watching you. They are watching you.", 12, 5);
+            "They are watching you. They are watching you.", 12);
 
 
     //Player Service
@@ -87,6 +87,34 @@ public class AppService {
         player.setRoomId(targetId);
         System.out.println("Welcome to: ");
         System.out.println(targetRoom.toString());
+    }
+
+    public void useItem(Player player){
+        ArrayList<Item> items = player.getItems();
+        if(items.isEmpty()){
+            System.out.println("No items in your hand");
+            return;
+        }
+
+        for (int i = 0; i < items.size(); i++) {
+            System.out.println((i + 1) + ": " + items.get(i).getName());
+        }
+
+        System.out.println("What item would you like to use? Type 0 to cancel.");
+        int itemIndex = Integer.parseInt(sc.nextLine());
+
+        if(itemIndex == 0){
+            System.out.println("No items used");
+            return;
+        } else if(itemIndex < 0 || itemIndex > items.size()){
+            System.out.println("Invalid choice");
+            return;
+        }
+
+        Item foundItem = items.get(itemIndex - 1);
+        foundItem.itemEffect(player);
+        System.out.println("You have used " + foundItem.getName() + ".");
+        items.remove(foundItem);
     }
 
     public void nextLevel(Player player){

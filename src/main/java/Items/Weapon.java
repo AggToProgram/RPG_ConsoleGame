@@ -1,7 +1,7 @@
 package Items;
 
 public class Weapon extends Item{
-    private int manaDmg;
+    private final int manaDmg;
 
     public Weapon(String name, String description, String type, int manaDmg, int dmg) {
         super(name, description, type, dmg);
@@ -10,10 +10,6 @@ public class Weapon extends Item{
 
     public int getManaDmg() {
         return manaDmg;
-    }
-
-    public void setManaDmg(int manaDmg) {
-        this.manaDmg = manaDmg;
     }
 
     @Override
