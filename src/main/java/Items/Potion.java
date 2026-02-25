@@ -1,10 +1,10 @@
 package Items;
 
 public class Potion extends Item {
-    private String buffType;
+    private final String buffType;
 
-    public Potion(String name, String description, String type, String buffType, int dmg) {
-        super(name, description, type, dmg);
+    public Potion(int id, String name, String description, String type, int dmg, String buffType) {
+        super(id, name, description, type, dmg);
         this.buffType = buffType;
     }
 

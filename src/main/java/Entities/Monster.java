@@ -1,11 +1,11 @@
 package Entities;
 
 public class Monster extends Entity{
-    private String type;
+    private final String type;
     private final int ogHp;
 
-    public Monster(String name, int hp, int dmg, String description, String type, int ogHp) {
-        super(name, hp, dmg, description);
+    public Monster(int id, String name, int hp, int dmg, String description, String type, int ogHp) {
+        super(id, name, hp, dmg, description);
         this.type = type;
         this.ogHp = ogHp;
     }

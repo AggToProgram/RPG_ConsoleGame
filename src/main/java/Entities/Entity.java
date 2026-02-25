@@ -1,6 +1,7 @@
 package Entities;
 
 public abstract class Entity {
+    private int id;
     private final String name;
     private int hp;
     private int dmg;
@@ -13,8 +14,20 @@ public abstract class Entity {
         this.description = description;
     }
 
+    public Entity(int id, String name, int hp, int dmg, String description) {
+        this.id = id;
+        this.name = name;
+        this.hp = hp;
+        this.dmg = dmg;
+        this.description = description;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public int getHP() {
@@ -38,5 +51,12 @@ public abstract class Entity {
 
     public String toString() {
         return "Name: " + name + "\nHP: " + hp + "\nDMG: " + dmg + "\nDescription: " + description;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 }

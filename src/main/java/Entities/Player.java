@@ -3,7 +3,6 @@ package Entities;
 import Items.Item;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Player extends Entity{
     private int mana;
@@ -13,6 +12,15 @@ public class Player extends Entity{
     private int exp;
 
     private final ArrayList<Item> items = new ArrayList<>();
+
+    public Player(int id, String name, int hp, int dmg, String description, int mana, int gold, int level, int roomId, int exp) {
+        super(id, name, hp, dmg, description);
+        this.mana = mana;
+        this.gold = gold;
+        this.level = level;
+        this.roomId = roomId;
+        this.exp = exp;
+    }
 
     public Player(String name, int hp, int dmg, String description, int mana, int gold, int level, int roomId, int exp) {
         super(name, hp, dmg, description);

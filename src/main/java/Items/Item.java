@@ -2,11 +2,13 @@ package Items;
 
 import Entities.Player;
 
-public abstract class Item {
+public class Item {
     private final String name, description, type;
     private final int dmg;
+    private final int id;
 
-    public Item(String name, String description, String type,  int dmg) {
+    public Item(int id, String name, String description, String type,  int dmg) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.type = type;
@@ -29,6 +31,10 @@ public abstract class Item {
 
     public String toStr() {
         return null;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void itemEffect(Player player) {

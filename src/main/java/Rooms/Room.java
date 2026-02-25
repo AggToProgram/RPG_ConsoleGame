@@ -2,9 +2,10 @@ package Rooms;
 
 public class Room {
     private final String name, description;
-    private final int requiredLvl;
+    private final int requiredLvl, id;
 
-    public Room(String name, String description, int requiredLvl) {
+    public Room(int id, String name, String description, int requiredLvl) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.requiredLvl = requiredLvl;
@@ -14,6 +15,10 @@ public class Room {
     }
     public int getRequiredLvl() {
         return requiredLvl;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
