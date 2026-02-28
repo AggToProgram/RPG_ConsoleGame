@@ -29,10 +29,6 @@ public class AppService {
         this.playerRepository = playerRepository;
     }
 
-    public PlayerRepository getPlayerRepository(){
-        return playerRepository;
-    }
-
     public void loadAllData() throws SQLException {
         monsterRepository.loadMonsters(monsters);
         roomRepository.loadRooms(rooms);
@@ -70,7 +66,7 @@ public class AppService {
                     String description = sc.nextLine();
 
                     Player player = new Player(name, 100, 25, description, 200, 0, 1, 1, 0);
-                    getPlayerRepository().addPlayer(player);
+                    playerRepository.addPlayer(player);
                     players.add(player);
 
                     System.out.println("You have entered the Doravas dungeon, the exit is blocked, you are clearly trapped.");
@@ -125,7 +121,7 @@ public class AppService {
 
             switch (input) {
                 case 1 -> playerMove(player);
-                case 2 -> playerExplore(player);
+                case 2 -> running = playerExplore(player);
                 case 3 -> useItem(player);
                 case 4 -> System.out.println(player.getStats());
                 case 5 -> {
@@ -144,21 +140,22 @@ public class AppService {
     }
 
     //Player Service
-    public void playerExplore(Player player) throws SQLException {
+    public boolean playerExplore(Player player){
 
         if (player.getRoomId() == 1){
             System.out.println("Nothing to explore here");
-            return;
+            return true;
         }
 
         int probability = (int)(Math.random() * 100);
         if (probability < 40) {
-            monsterApparition(randomMonster(player), player);
+            return monsterApparition(randomMonster(player), player);
         } else if (probability < 80) {
             itemApparition(randomItem(), player);
         } else {
             System.out.println("Nothing has been found!");
         }
+        return true;
     }
 
     public void playerMove(Player player){
@@ -197,7 +194,7 @@ public class AppService {
         System.out.println(targetRoom.toString());
     }
 
-    public void useItem(Player player) throws SQLException {
+    public void useItem(Player player) {
         ArrayList<Item> items = player.getItems();
         if(items.isEmpty()){
             System.out.println("No items in your hand");
@@ -292,7 +289,7 @@ public class AppService {
         return null;
     }
 
-    public void monsterApparition(Monster monster, Player player) throws SQLException {
+    public boolean monsterApparition(Monster monster, Player player) {
         boolean running = true;
         System.out.println("A monster has appeared!");
         System.out.println(player.getStats());
@@ -315,6 +312,13 @@ public class AppService {
                 } else  {
                     System.out.println("The monster strikes back!");
                     player.takeDamage(monster.getDmg());
+                    if (player.getHP() <= 0) {
+                        System.out.println("You have died");
+                        System.out.println("All progress will be eliminated, too bad so sad!");
+                        playerRepository.deletePlayer(player);
+                        //I want to end the parent method here
+                        return false;
+                    }
                 }
             } else if (Integer.parseInt(sc.nextLine()) == 2) {
                 useItem(player);
@@ -326,12 +330,12 @@ public class AppService {
                 System.out.println("Invalid choice");
             }
         }
+        return true;
     }
 
 
     //Item Service
     public Item randomItem(){
-        System.out.println(items);
         int probability = (int) (Math.random() * 100);
         if (probability < 50) {
             return items.getFirst();

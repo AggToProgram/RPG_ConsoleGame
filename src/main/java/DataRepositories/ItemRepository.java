@@ -7,8 +7,6 @@ import Items.Weapon;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ItemRepository {
     private final Connection connection;
@@ -17,7 +15,7 @@ public class ItemRepository {
         this.connection = connection;
     }
 
-    public void loadItems(ArrayList<Item> items) throws SQLException {
+    public void loadItems(ArrayList<Item> items) {
         String sql = "SELECT * FROM items";
         try (Statement statement = connection.createStatement()){
             ResultSet rs = statement.executeQuery(sql);
@@ -52,12 +50,6 @@ public class ItemRepository {
 
     public void loadInventory(Player player, ArrayList<Item> items) {
         player.getItems().clear();
-
-//        Map<Integer, Item> itemMap = new HashMap<>();
-//        for (Item item : items) {
-//            itemMap.put(item.getId(), item);
-//        }
-
         String sql = "SELECT item_id FROM playerInventory WHERE player_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setInt(1, player.getId());
@@ -108,7 +100,7 @@ public class ItemRepository {
         }
     }
 
-    public void deleteFromInventory(Player player, Item item) throws SQLException {
+    public void deleteFromInventory(Player player, Item item) {
         String sql = "DELETE FROM playerInventory WHERE player_id = ? AND item_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setInt(1, player.getId());

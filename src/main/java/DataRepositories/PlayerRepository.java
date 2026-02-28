@@ -40,6 +40,8 @@ public class PlayerRepository {
         String sql = "INSERT INTO players (playerName, hp, dmg, descript, mana, gold, lvl, room_id, exp) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql,  Statement.RETURN_GENERATED_KEYS)) {
             playerData(p, preparedStatement);
+
+            preparedStatement.executeUpdate();
             ResultSet getKeys = preparedStatement.getGeneratedKeys();
             if (getKeys.next()) {
                 p.setId(getKeys.getInt(1));
@@ -53,6 +55,9 @@ public class PlayerRepository {
         String sql = "UPDATE players SET playerName = ?, hp = ?, dmg = ?, descript = ?, mana = ?, gold = ?, lvl = ?,  room_id = ?, exp = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             playerData(p, preparedStatement);
+            preparedStatement.setInt(10, p.getId());
+
+            preparedStatement.executeUpdate();
             int rowsUpdated = preparedStatement.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println(p.getName() + " has been updated");
@@ -74,9 +79,6 @@ public class PlayerRepository {
         preparedStatement.setInt(7, p.getLevel());
         preparedStatement.setInt(8, p.getRoomId());
         preparedStatement.setInt(9, p.getExp());
-        preparedStatement.setInt(10, p.getId());
-
-        preparedStatement.executeUpdate();
     }
 
     public void deletePlayer(Player p) {
